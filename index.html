@@ -8,6 +8,7 @@
     <link rel="icon" href="s2s bgw.jpg">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -15,11 +16,7 @@
             background-color: #f5f5f5;
             color: #1f2937;
         }
-        .bg-pattern {
-            background-image: linear-gradient(to right, #f8f8f8 1px, transparent 1px),
-                              linear-gradient(to bottom, #f8f8f8 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
+        
         .accordion-item {
             border-bottom: 1px solid #e5e7eb;
         }
@@ -48,250 +45,420 @@
             filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
         }
         .perspective {
-  perspective: 1000px;
-}
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-.backface-hidden {
-  backface-visibility: hidden;
-}
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
+            perspective: 1000px;
+        }
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
 
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Video background styles */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+            z-index: 1;
+        }
+        
+        /* Button animation styles */
+        .enroll-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+        }
+        
+        .enroll-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+        }
+        
+        .enroll-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .enroll-btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-text {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .enroll-btn:hover .btn-text {
+            transform: scale(1.05);
+        }
+        
+        .btn-icon {
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .enroll-btn:hover .btn-icon {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .gradient-btn {
+            background: linear-gradient(-45deg, #8b5cf6, #6366f1, #ec4899, #f59e0b);
+            background-size: 400% 400%;
+            animation: gradientShift 5s ease infinite;
+        }
+
+        /* ADD TESTIMONIALS SCROLLING CSS RIGHT HERE */
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(calc(-320px * 6)); /* Move by width of 6 testimonials */
+          }
+        }
+
+        .animate-scroll {
+          animation: scroll 30s linear infinite;
+          display: flex;
+          width: max-content;
+        }
+
+        /* Pause animation on hover */
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }
+
+        /* Ensure proper spacing */
+        .w-80 {
+          width: 20rem; /* 320px */
+        }
+        /* END OF TESTIMONIALS CSS */
+
+        /* Blur header styles */
+        .blur-header {
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.85);
+            transition: all 0.3s ease;
+        }
+
+        /* Mobile-specific improvements */
+        @media (max-width: 768px) {
+            /* Header improvements for mobile */
+            .mobile-header {
+                padding: 0.75rem 1rem;
+            }
+            
+            /* Hero section mobile adjustments */
+            .hero-title {
+                font-size: 2rem;
+                line-height: 1.2;
+                margin-bottom: 1rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+                line-height: 1.4;
+            }
+            
+            /* Cards mobile adjustments */
+            .highlight-card {
+                padding: 1.5rem;
+                margin-bottom: 1rem;
+            }
+            
+            /* Course highlights mobile */
+            .course-card {
+                height: auto;
+                min-height: 280px;
+                margin-bottom: 1.5rem;
+            }
+            
+            /* Testimonials mobile */
+            .testimonial-card {
+                width: 85vw;
+                margin: 0 1rem;
+            }
+            
+            /* Dashboard images mobile */
+            .dashboard-image {
+                margin-bottom: 1.5rem;
+            }
+            
+            /* Form mobile adjustments */
+            .enrollment-form {
+                padding: 1.5rem;
+            }
+            
+            /* Button mobile sizing */
+            .mobile-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .testimonial-card {
+                width: 90vw;
+                margin: 0 0.5rem;
+            }
+        }
+
+        /* Testimonials mobile scrolling fix */
+        @media (max-width: 768px) {
+            @keyframes scroll-mobile {
+                0% {
+                    transform: translateX(0);
+                }
+                100% {
+                    transform: translateX(calc(-280px * 6));
+                }
+            }
+            
+            .animate-scroll {
+                animation: scroll-mobile 25s linear infinite;
+            }
+            
+            .testimonial-card {
+                width: 280px;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- Header Section -->
-  ``<header class="flex justify-between items-center px-6 py-2 shadow-md fixed top-0 w-full bg-white z-50">
-  <div class="flex items-center">
-    <img src="S2S.png"  
-         class="h-16 w-auto ss-logo-shadow object-contain" 
-         alt="Logo">
-  </div>
- <a href="#enroll" <button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-full shadow-lg transition">
-    Enroll Now
-  </button> </a>
-</header>
-
+    <!-- Header Section - Improved for Mobile -->
+    <header class="flex justify-between items-center px-4 py-3 fixed top-0 w-full z-50 blur-header mobile-header">
+        <!-- Logo on the left - Hidden on mobile -->
+        <img src="S2S.png" class="h-12 w-auto object-contain drop-shadow-md " alt="Logo">
+        
+        <!-- Centered "Skill 2 Success" text - Responsive -->
+        <div class="text-center flex-1 sm:flex-none">
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                Skill 2 Success
+            </h1>
+            <p class="text-xs text-gray-600 mt-1 hidden md:block">Transforming Careers Through Education</p>
+        </div>
+        
+        <!-- Enroll Now button on the right - Responsive -->
+        <a href="#enroll">
+            <button class="enroll-btn gradient-btn pulse text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full font-semibold transition-all duration-300 flex items-center space-x-1 sm:space-x-2 mobile-btn">
+                <span class="btn-text text-sm sm:text-base">Enroll Now</span>
+                <span class="btn-icon hidden sm:block">
+                    <i class="fas fa-arrow-right"></i>
+                </span>
+            </button>
+        </a>
+    </header>
 
     <main>
-        <!-- Hero Section -->
-       
-<section class="relative bg-purple-700 text-white py-20 md:py-32 overflow-hidden">
-  <div class="container mx-auto px-4 text-center relative z-10">
-    <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight drop-shadow-lg">
-      Become a Certified Data Analyst
-    </h1>
-    <p class="text-lg md:text-2xl mb-12 max-w-2xl mx-auto font-thin">
-      Unlock your career potential with our <br> <span class="font-bold text-yellow-200">3-month hands-on training program.</span> 
-    </p>
+        <!-- Hero Section with Video Background - Improved for Mobile -->
+        <section class="relative text-white pt-24 pb-16 md:py-32 overflow-hidden">
+            <!-- Video Background -->
+            <video autoplay muted loop class="video-background">
+                <source src="DA.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            
+            <!-- Dark overlay for text readability -->
+            <div class="video-overlay"></div>
+            
+            <!-- Content (improved for mobile) -->
+            <div class="container mx-auto px-4 text-center relative z-10">
+                <h1 class="text-3xl md:text-6xl font-extrabold mb-4 md:mb-6 leading-tight drop-shadow-lg hero-title">
+                    Become a Certified Data Analyst
+                </h1>
+                <p class="text-lg md:text-2xl mb-8 md:mb-12 max-w-2xl mx-auto font-thin hero-subtitle">
+                    Unlock your career potential with our <br> 
+                    <span class="font-bold text-yellow-200">3-month hands-on training program.</span> 
+                </p>
 
-    <!-- Highlight Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto mb-12">
-      <div class="bg-white text-purple-900 rounded-2xl shadow-xl p-6 transform hover:scale-105 transition">
-        <div class="flex items-center justify-center mb-4">
-          <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 1.343-3 3v3H6l6 6 6-6h-3v-3c0-1.657-1.343-3-3-3z"/>
-          </svg>
-        </div>
-        <h3 class="text-3xl font-bold text-purple-700">₹18,000</h3>
-        <p class="text-gray-600">Course Fee</p>
-      </div>
+                <!-- Highlight Cards - Improved for Mobile -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 max-w-2xl mx-auto mb-8 md:mb-12">
+                    <div class="bg-white text-purple-900 rounded-2xl shadow-xl p-4 md:p-6 transform hover:scale-105 transition highlight-card">
+                        <div class="flex items-center justify-center mb-3 md:mb-4">
+                            <svg class="w-8 h-8 md:w-10 md:h-10 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 1.343-3 3v3H6l6 6 6-6h-3v-3c0-1.657-1.343-3-3-3z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-purple-700">₹18,000</h3>
+                        <p class="text-gray-600 text-sm md:text-base">Course Fee</p>
+                    </div>
 
-      <div class="bg-white text-purple-900 rounded-2xl shadow-xl p-6 transform hover:scale-105 transition">
-        <div class="flex items-center justify-center mb-4">
-          <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-        </div>
-        <h3 class="text-3xl font-bold text-purple-700">3 Months</h3>
-        <p class="text-gray-600">Duration</p>
-      </div>
-    </div>
+                    <div class="bg-white text-purple-900 rounded-2xl shadow-xl p-4 md:p-6 transform hover:scale-105 transition highlight-card">
+                        <div class="flex items-center justify-center mb-3 md:mb-4">
+                            <svg class="w-8 h-8 md:w-10 md:h-10 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-purple-700">3 Months</h3>
+                        <p class="text-gray-600 text-sm md:text-base">Duration</p>
+                    </div>
+                </div>
 
-    <a href="#enroll" class="inline-block bg-yellow-300 hover:bg-yellow-400 text-purple-900 font-bold py-4 px-10 rounded-full text-lg shadow-lg transition-transform duration-300 transform hover:scale-110">
-      🚀 Start Your Journey Today
-    </a>
-  </div>
-
-  <!-- Purple overlay -->
-  <div class="absolute inset-0 bg-purple-800 opacity-50 z-0"></div>
-</section>
-            <!-- Background pattern -->
-            <!-- <div class="absolute inset-0 bg-purple-800 opacity-50 z-0"></div> -->
-            <!-- <svg class="absolute bottom-0 left-0 w-full h-auto text-white z-0" viewBox="0 0 1440 320">
-                <path fill="currentColor" fill-opacity="1" d="M0,160L48,176C96,192,192,224,288,208C384,192,480,128,576,106.7C672,85,768,107,864,138.7C960,171,1056,213,1152,229.3C1248,245,1344,235,1392,232L1440,229.3L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-            </svg> -->
+                <a href="#enroll" class="pulse scroll-smooth inline-block bg-yellow-300 hover:bg-yellow-400 text-purple-900 font-bold py-3 px-8 md:py-4 md:px-10 rounded-full text-base md:text-lg shadow-lg transition-transform duration-300 transform hover:scale-110 mobile-btn">
+                    🚀 Start Your Journey Today
+                </a>
+            </div>
         </section>
 
-        <!-- Course Highlights Section -->
-        <!-- Course Highlights Section -->
-<section class="py-20 ">
-  <div class="container mx-auto px-4">
-    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">What You Will Master</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-
-      <!-- Excel -->
-      <div class="relative group perspective">
-        <div class="relative w-full h-72 transition-transform duration-700 transform-style preserve-3d group-hover:rotate-y-180 group-hover:scale-105 group-hover:shadow-2xl">
-          <!-- Front Side -->
-          <div class="absolute inset-0 bg-gradient-to-br from-green-100 via-green-200 to-green-50 p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center backface-hidden">
-            <div class="bg-white shadow-lg p-4 rounded-full mb-5 transform group-hover:scale-110 transition">
-              <svg class="w-14 h-14 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-4m0 0a2 2 0 11-4 0m4 0a2 2 0 10-4 0m0 0h4m-4 0v4m4-4h4m-4 0v4m4-4h4m0 0a2 2 0 11-4 0m4 0a2 2 0 10-4 0m0 0h4m-4 0v4"></path>
-              </svg>
-            </div>
-            <h3 class="text-2xl font-bold mb-2 text-gray-800">Microsoft Excel</h3>
-            <p class="text-gray-600 text-center">Formulas, pivot tables, automation & more.</p>
-          </div>
-          <!-- Back Side -->
-          <!-- Excel -->
-            <!-- Excel -->
-<div class="relative group">
-  <div class="relative w-full h-72 bg-gradient-to-br from-green-100 via-green-200 to-green-50 p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center overflow-hidden">
-    <!-- Icon & Text -->
-    <div class="z-10 text-center transition-all duration-500 group-hover:opacity-0">
-      <div class="bg-white shadow-lg p-4 rounded-full mb-5 transform group-hover:scale-110 transition">
-        <svg class="w-14 h-14 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M9 17v-4m0 0a2 2 0 11-4 0m4 0a2 2 0 10-4 0m0 0h4m-4 0v4m4-4h4m-4 0v4m4-4h4m0 0a2 2 0 11-4 0m4 0a2 2 0 10-4 0m0 0h4m-4 0v4"></path>
-        </svg>
-      </div>
-      <h3 class="text-2xl font-bold mb-2 text-gray-800">Microsoft Excel</h3>
-      <p class="text-gray-600">Formulas, pivot tables, automation & more.</p>
-    </div>
-
-    <!-- Image on hover -->
-    <div
-      class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
-      <img src="excel_pin-removebg-preview.png" alt="Excel Dashboard"
-        class="w-full h-full object-contain rounded-xl border border-gray-200 shadow-lg">
-    </div>
-  </div>
-</div>
-
-
-        </div>
-      </div>
-
-      <!-- SQL -->
-      <div class="relative group perspective">
-        <div class="relative w-full h-72 transition-transform duration-700 transform-style preserve-3d group-hover:rotate-y-180 group-hover:scale-105 group-hover:shadow-2xl">
-          <!-- Front -->
-          <div class="absolute inset-0 bg-gradient-to-br from-purple-100 via-purple-200 to-purple-50 p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center backface-hidden">
-            <div class="bg-white shadow-lg p-4 rounded-full mb-5 transform group-hover:scale-110 transition">
-              <svg class="w-14 h-14 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <h3 class="text-2xl font-bold mb-2 text-gray-800">SQL & Databases</h3>
-            <p class="text-gray-600 text-center">Query and manage relational databases.</p>
-          </div>
-          <!-- Back -->
-<div class="relative group">
-  <div class="relative w-full h-72 bg-gradient-to-br from-purple-100 via-purple-200 to-purple-50 p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center overflow-hidden">
-    <!-- Icon & Text -->
-    <div class="z-10 text-center transition-all duration-500 group-hover:opacity-0">
-      <div class="bg-white shadow-lg p-4 rounded-full mb-5 transform group-hover:scale-110 transition">
-        <svg class="w-14 h-14 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-      </div>
-      <h3 class="text-2xl font-bold mb-2 text-gray-800">SQL & Databases</h3>
-      <p class="text-gray-600">Query and manage relational databases.</p>
-    </div>
-
-    <!-- Image on hover -->
-    <div
-      class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
-      <img src="sql_-removebg-preview.png" alt="SQL Query Example"
-        class="w-full h-full object-contain rounded-xl border border-gray-200 shadow-lg">
-    </div>
-  </div>
-</div>
-
-        </div>
-      </div>
-
-      <!-- Power BI -->
-      <div class="relative group perspective">
-        <div class="relative w-full h-72 transition-transform duration-700 transform-style preserve-3d group-hover:rotate-y-180 group-hover:scale-105 group-hover:shadow-2xl">
-          <!-- Front -->
-          <div class="absolute inset-0 bg-gradient-to-br from-orange-100 via-orange-200 to-orange-50 p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center backface-hidden">
-            <div class="bg-white shadow-lg p-4 rounded-full mb-5 transform group-hover:scale-110 transition">
-              <svg class="w-14 h-14 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9 0 0120.488 9z"></path>
-              </svg>
-            </div>
-            <h3 class="text-2xl font-bold mb-2 text-gray-800">Power BI</h3>
-            <p class="text-gray-600 text-center">Build interactive dashboards & reports.</p>
-          </div>
-          <!-- Back -->
-          <div class="relative group">
-  <div class="relative w-full h-72 bg-gradient-to-br from-orange-100 via-orange-200 to-orange-50 p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center overflow-hidden">
-    <!-- Icon & Text -->
-    <div class="z-10 text-center transition-all duration-500 group-hover:opacity-0">
-      <div class="bg-white shadow-lg p-4 rounded-full mb-5 transform group-hover:scale-110 transition">
-        <svg class="w-14 h-14 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
-        </svg>
-      </div>
-      <h3 class="text-2xl font-bold mb-2 text-gray-800">Power BI</h3>
-      <p class="text-gray-600">Build interactive dashboards & reports.</p>
-    </div>
-
-    <!-- Image on hover -->
-    <div
-      class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
-      <img src="pbii.png" alt="Power BI Dashboard"
-        class="w-full h-full object-contain rounded-xl border border-gray-200 shadow-lg">
-    </div>
-  </div>
-</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-
-        <!-- Dashboard Gallery Section -->
-        <section class="py-20 bg-gray-50">
+        <!-- Course Highlights Section - Improved for Mobile -->
+        <section class="py-16 md:py-20">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Dashboards You'll Build</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white rounded-2xl shadow-lg p-4">
+                <h2 class="text-2xl md:text-4xl font-bold text-center mb-8 md:mb-12">What You Will Master</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+
+                    <!-- Excel Card - Improved for Mobile -->
+                    <div class="relative group course-card">
+                        <div class="relative w-full h-64 md:h-72 bg-gradient-to-br from-green-100 via-green-200 to-green-50 p-6 md:p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center overflow-hidden">
+                            <!-- Icon & Text -->
+                            <div class="z-10 text-center transition-all duration-500 group-hover:opacity-0">
+                                <div class="bg-white shadow-lg p-3 md:p-4 rounded-full mb-4 md:mb-5 transform group-hover:scale-110 transition">
+                                    <svg class="w-10 h-10 md:w-14 md:h-14 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-4m0 0a2 2 0 11-4 0m4 0a2 2 0 10-4 0m0 0h4m-4 0v4m4-4h4m-4 0v4m4-4h4m0 0a2 2 0 11-4 0m4 0a2 2 0 10-4 0m0 0h4m-4 0v4"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 text-gray-800">Microsoft Excel</h3>
+                                <p class="text-gray-600 text-sm md:text-base">Formulas, pivot tables, automation & more.</p>
+                            </div>
+
+                            <!-- Image on hover -->
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
+                                <img src="excel_pin-removebg-preview.png" alt="Excel Dashboard" class="w-full h-full object-contain rounded-xl border border-gray-200 shadow-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SQL Card - Improved for Mobile -->
+                    <div class="relative group course-card">
+                        <div class="relative w-full h-64 md:h-72 bg-gradient-to-br from-purple-100 via-purple-200 to-purple-50 p-6 md:p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center overflow-hidden">
+                            <!-- Icon & Text -->
+                            <div class="z-10 text-center transition-all duration-500 group-hover:opacity-0">
+                                <div class="bg-white shadow-lg p-3 md:p-4 rounded-full mb-4 md:mb-5 transform group-hover:scale-110 transition">
+                                    <svg class="w-10 h-10 md:w-14 md:h-14 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 text-gray-800">SQL & Databases</h3>
+                                <p class="text-gray-600 text-sm md:text-base">Query and manage relational databases.</p>
+                            </div>
+
+                            <!-- Image on hover -->
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
+                                <img src="sql_-removebg-preview.png" alt="SQL Query Example" class="w-full h-full object-contain rounded-xl border border-gray-200 shadow-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Power BI Card - Improved for Mobile -->
+                    <div class="relative group course-card">
+                        <div class="relative w-full h-64 md:h-72 bg-gradient-to-br from-orange-100 via-orange-200 to-orange-50 p-6 md:p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center overflow-hidden">
+                            <!-- Icon & Text -->
+                            <div class="z-10 text-center transition-all duration-500 group-hover:opacity-0">
+                                <div class="bg-white shadow-lg p-3 md:p-4 rounded-full mb-4 md:mb-5 transform group-hover:scale-110 transition">
+                                    <svg class="w-10 h-10 md:w-14 md:h-14 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl md:text-2xl font-bold mb-2 text-gray-800">Power BI</h3>
+                                <p class="text-gray-600 text-sm md:text-base">Build interactive dashboards & reports.</p>
+                            </div>
+
+                            <!-- Image on hover -->
+                            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center">
+                                <img src="pbii.png" alt="Power BI Dashboard" class="w-full h-full object-contain rounded-xl border border-gray-200 shadow-lg">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Gallery Section - Improved for Mobile -->
+        <section class="py-16 md:py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-2xl md:text-4xl font-bold text-center mb-8 md:mb-12">Dashboards You'll Build</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                    <div class="bg-white rounded-2xl shadow-lg p-4 dashboard-image">
                         <img src="PowerBI img.jpg" alt="Power BI Dashboard" class="rounded-xl w-full h-auto object-cover border border-gray-200">
                     </div>
-                    <div class="bg-white rounded-2xl shadow-lg p-4">
+                    <div class="bg-white rounded-2xl shadow-lg p-4 dashboard-image">
                         <img src="Tabalue img .jpg" alt="Tableau Dashboard" class="rounded-xl w-full h-auto object-cover border border-gray-200">
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Syllabus Section -->
-        <section class="py-20 bg-gray-50">
+        <!-- Syllabus Section - Improved for Mobile -->
+        <section class="py-16 md:py-20 bg-gray-50">
             <div class="container mx-auto px-4">
-                <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Detailed Syllabus</h2>
+                <h2 class="text-2xl md:text-4xl font-bold text-center mb-8 md:mb-12">Detailed Syllabus</h2>
                 <div class="max-w-3xl mx-auto rounded-lg shadow-lg bg-white overflow-hidden">
                     <!-- Excel Accordion -->
                     <div class="accordion-item">
                         <div class="accordion-header" onclick="toggleAccordion('excel-syllabus')">
-                            <h3 class="text-lg font-semibold text-purple-700">Microsoft Excel Syllabus</h3>
-                            <svg class="w-6 h-6 transform transition-transform" id="excel-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <h3 class="text-base md:text-lg font-semibold text-purple-700">Microsoft Excel Syllabus</h3>
+                            <svg class="w-5 h-5 md:w-6 md:h-6 transform transition-transform" id="excel-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </div>
                         <div id="excel-syllabus" class="accordion-content">
-                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 text-sm md:text-base">
                                 <li>Introduction to Excel for Data Analysis</li>
                                 <li>Data Cleaning and Preprocessing</li>
                                 <li>Advanced Formulas (VLOOKUP, HLOOKUP, INDEX/MATCH)</li>
@@ -304,11 +471,11 @@
                     <!-- SQL Accordion -->
                     <div class="accordion-item">
                         <div class="accordion-header" onclick="toggleAccordion('sql-syllabus')">
-                            <h3 class="text-lg font-semibold text-purple-700">SQL Syllabus</h3>
-                            <svg class="w-6 h-6 transform transition-transform" id="sql-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <h3 class="text-base md:text-lg font-semibold text-purple-700">SQL Syllabus</h3>
+                            <svg class="w-5 h-5 md:w-6 md:h-6 transform transition-transform" id="sql-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </div>
                         <div id="sql-syllabus" class="accordion-content">
-                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 text-sm md:text-base">
                                 <li>Introduction to Relational Databases</li>
                                 <li>Basic SQL Queries (SELECT, FROM, WHERE)</li>
                                 <li>Joins (INNER, LEFT, RIGHT, FULL)</li>
@@ -321,11 +488,11 @@
                     <!-- Power BI Accordion -->
                     <div class="accordion-item">
                         <div class="accordion-header" onclick="toggleAccordion('powerbi-syllabus')">
-                            <h3 class="text-lg font-semibold text-purple-700">Power BI Syllabus</h3>
-                            <svg class="w-6 h-6 transform transition-transform" id="powerbi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <h3 class="text-base md:text-lg font-semibold text-purple-700">Power BI Syllabus</h3>
+                            <svg class="w-5 h-5 md:w-6 md:h-6 transform transition-transform" id="powerbi-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </div>
                         <div id="powerbi-syllabus" class="accordion-content">
-                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                            <ul class="list-disc list-inside text-gray-600 space-y-2 text-sm md:text-base">
                                 <li>Introduction to Power BI Desktop</li>
                                 <li>Data Transformation with Power Query</li>
                                 <li>Modeling Data with DAX (Data Analysis Expressions)</li>
@@ -339,58 +506,160 @@
             </div>
         </section>
 
-        <!-- Testimonials Section -->
-        <section class="py-20 bg-purple-700 text-white">
+        <!-- Testimonials Section - Improved for Mobile -->
+        <section class="py-16 md:py-20 bg-purple-700 text-white">
             <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12">Hear from Our Alumni</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Testimonial 1: Priya Sharma -->
-                    <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
-                        <img src="WhatsApp Image 2025-09-23 at 13.53.21_53fa6f28.jpg" alt="Priya Sharma" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
-                        <p class="text-lg italic mb-4">"The instructors are top-notch and the curriculum is very practical. I landed a job just two months after completing the course!"</p>
-                        <p class="font-semibold text-yellow-300">- Priya Sharma</p>
-                    </div>
-                    <!-- Testimonial 2: Rahul Singh -->
-                    <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
-                        <img src="WhatsApp Image 2025-09-23 at 13.53.22_e67fbdde.jpg" alt="Rahul Singh" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
-                        <p class="text-lg italic mb-4">"SS Infotech's course gave me the skills and confidence I needed to switch my career. The projects were invaluable."</p>
-                        <p class="font-semibold text-yellow-300">- Rahul Singh</p>
-                    </div>
-                    <!-- Testimonial 3: Ananya Verma -->
-                    <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
-                        <img src="WhatsApp Image 2025-09-23 at 13.53.21_fb9daf5f.jpg" alt="Ananya Verma" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
-                        <p class="text-lg italic mb-4">"Hands-on learning and personalized attention made all the difference. Highly recommend this course to anyone serious about data analysis."</p>
-                        <p class="font-semibold text-yellow-300">- Ananya Verma</p>
+                <h2 class="text-2xl md:text-4xl font-bold mb-8 md:mb-12">Hear from Our Alumni</h2>
+
+                <!-- Scrolling Wrapper -->
+                <div class="overflow-hidden relative">
+                    <div class="flex animate-scroll">
+                        
+                        <!-- First set of testimonials -->
+                        <div class="flex">
+                            <!-- Each testimonial -->
+                            <div class="w-80 mx-4 flex-shrink-0 testimonial-card">
+                                <div class="bg-purple-800 p-6 md:p-8 rounded-2xl shadow-lg flex flex-col items-center">
+                                    <img src="Niharika.jpg" alt="Niharika" class="w-16 h-16 md:w-24 md:h-24 rounded-full mb-3 md:mb-4 object-cover border-4 border-white shadow-md">
+                                    <p class="text-base md:text-lg italic mb-3 md:mb-4">"The instructors are top-notch and the curriculum is very practical. I landed a job just two months after completing the course!"</p>
+                                    <p class="font-semibold text-yellow-300 text-sm md:text-base">- Niharika</p>
+                                </div>
+                            </div>
+
+                            <!-- Repeat for other testimonials with same mobile classes -->
+                            <div class="w-80 mx-4 flex-shrink-0 testimonial-card">
+                                <div class="bg-purple-800 p-6 md:p-8 rounded-2xl shadow-lg flex flex-col items-center">
+                                    <img src="pratik.jpg" alt="Prateek" class="w-16 h-16 md:w-24 md:h-24 rounded-full mb-3 md:mb-4 object-cover border-4 border-white shadow-md">
+                                    <p class="text-base md:text-lg italic mb-3 md:mb-4">"SS Infotech's course gave me the skills and confidence I needed to switch my career. The projects were invaluable."</p>
+                                    <p class="font-semibold text-yellow-300 text-sm md:text-base">- Prateek</p>
+                                </div>
+                            </div>
+
+
+                            
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="Borkar.jpg" alt="Borkar" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"Hands-on learning and personalized attention made all the difference. Highly recommend this course to anyone serious about data analysis."</p>
+              <p class="font-semibold text-yellow-300">- Borkar</p>
+            </div>
+          </div>
+
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="girl.jpg" alt="Saloni" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"The projects were hands-on and very practical. I gained confidence in real-world data analysis."</p>
+              <p class="font-semibold text-yellow-300">- Saloni</p>
+            </div>
+          </div>
+
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="beard.jpg" alt="Ajay" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"The mentorship and guidance from SS Infotech helped me grow faster than I expected."</p>
+              <p class="font-semibold text-yellow-300">- Ajay</p>
+            </div>
+          </div>
+
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="Meenal.jpg" alt="Meenal" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"The projects and real-life case studies really boosted my confidence."</p>
+              <p class="font-semibold text-yellow-300">- Meenal</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duplicate set for seamless loop -->
+        <div class="flex">
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="Niharika.jpg" alt="Niharika" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"The instructors are top-notch and the curriculum is very practical. I landed a job just two months after completing the course!"</p>
+              <p class="font-semibold text-yellow-300">- Niharika</p>
+            </div>
+          </div>
+
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="pratik.jpg" alt="Prateek" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"SS Infotech's course gave me the skills and confidence I needed to switch my career. The projects were invaluable."</p>
+              <p class="font-semibold text-yellow-300">- Prateek</p>
+            </div>
+          </div>
+
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="Borkar.jpg" alt="Borkar" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"Hands-on learning and personalized attention made all the difference. Highly recommend this course to anyone serious about data analysis."</p>
+              <p class="font-semibold text-yellow-300">- Borkar</p>
+            </div>
+          </div>
+
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="girl.jpg" alt="Saloni" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"The projects were hands-on and very practical. I gained confidence in real-world data analysis."</p>
+              <p class="font-semibold text-yellow-300">- Saloni</p>
+            </div>
+          </div>
+
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="beard.jpg" alt="Ajay" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"The mentorship and guidance from SS Infotech helped me grow faster than I expected."</p>
+              <p class="font-semibold text-yellow-300">- Ajay</p>
+            </div>
+          </div>
+
+          <div class="w-80 mx-4 flex-shrink-0">
+            <div class="bg-purple-800 p-8 rounded-2xl shadow-lg flex flex-col items-center">
+              <img src="Meenal.jpg" alt="Meenal" class="w-24 h-24 rounded-full mb-4 object-cover border-4 border-white shadow-md">
+              <p class="text-lg italic mb-4">"The projects and real-life case studies really boosted my confidence."</p>
+              <p class="font-semibold text-yellow-300">- Meenal</p>
+            </div>
+          </div>
+        </div>
+
+                            <!-- Add remaining testimonials with same pattern -->
+                            
+                        </div>
+
+                        <!-- Duplicate set for seamless loop -->
+                        <div class="flex">
+                            <!-- Duplicate testimonials here -->
+                        </div>
+
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Enrollment Form -->
-        <section id="enroll" class="py-20 bg-gray-50 bg-pattern">
+        <!-- Enrollment Form - Improved for Mobile -->
+        <section id="enroll" class="py-16 md:py-20 bg-gray-50">
             <div class="container mx-auto px-4">
-                <div class="max-w-xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-xl">
-                    <h2 class="text-3xl font-bold text-center mb-2">Ready to Enroll?</h2>
-                    <p class="text-center text-gray-600 mb-8">Fill out the form below and we'll get back to you with all the details.</p>
+                <div class="max-w-xl mx-auto bg-white p-6 md:p-12 rounded-2xl shadow-xl enrollment-form">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">Ready to Enroll?</h2>
+                    <p class="text-center text-gray-600 mb-6 md:mb-8 text-sm md:text-base">Fill out the form below and we'll get back to you with all the details.</p>
 
                     <form id="enrollment-form" onsubmit="handleFormSubmit(event)">
-                        <div class="mb-6">
+                        <div class="mb-4 md:mb-6">
                             <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
-                            <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" required>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 text-sm md:text-base" required>
                         </div>
-                        <div class="mb-6">
+                        <div class="mb-4 md:mb-6">
                             <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
-                            <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" required>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 text-sm md:text-base" required>
                         </div>
-                        <div class="mb-6">
+                        <div class="mb-4 md:mb-6">
                             <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200" required>
+                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 text-sm md:text-base" required>
                         </div>
-                        <div class="mb-6">
+                        <div class="mb-4 md:mb-6">
                             <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Your Message (Optional)</label>
-                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200"></textarea>
+                            <textarea id="message" name="message" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200 text-sm md:text-base"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-105">
+                        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg shadow-lg transition-transform duration-300 transform hover:scale-105 text-sm md:text-base">
                             Submit Inquiry
                         </button>
                     </form>
@@ -401,74 +670,67 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
+    <footer class="bg-gray-800 text-white py-6 md:py-8">
         <div class="container mx-auto px-4 text-center">
-            <p>&copy; 2025 SS Infotech. All Rights Reserved.</p>
+            <p class="text-sm md:text-base">&copy; 2025 SS Infotech. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script>
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2bF3O5bRugeTggsAjfgAYAM20XJx-ux15B4gddAiwZDGz5R3O66CAITY_hLhNKy6IAg/exec";
+        // Your existing JavaScript remains the same
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2bF3O5bRugeTggsAjfgAYAM20XJx-ux15B4gddAiwZDGz5R3O66CAITY_hLhNKy6IAg/exec";
 
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
 
-    // Convert to URLSearchParams (form-encoded)
-    const params = new URLSearchParams();
-    for (const pair of formData.entries()) {
-      params.append(pair[0], pair[1]);
-    }
+            const params = new URLSearchParams();
+            for (const pair of formData.entries()) {
+                params.append(pair[0], pair[1]);
+            }
 
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-      },
-      body: params.toString()
-    })
-    .then(async res => {
-      // try parse JSON response
-      const json = await res.json().catch(() => null);
-      if (res.ok && json && json.status === "success") {
-        const statusMessage = document.getElementById('status-message');
-        statusMessage.textContent = "✅ Thank you! Your inquiry has been recorded.";
-        statusMessage.classList.remove('hidden', 'text-red-500');
-        statusMessage.classList.add('text-green-500');
-        form.reset();
-      } else {
-        throw new Error(json && json.message ? json.message : 'Server error');
-      }
-    })
-    .catch(err => {
-      console.error("Submission error:", err);
-      const statusMessage = document.getElementById('status-message');
-      statusMessage.textContent = "❌ Something went wrong. Please try again.";
-      statusMessage.classList.remove('hidden', 'text-green-500');
-      statusMessage.classList.add('text-red-500');
-    });
-  }
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                },
+                body: params.toString()
+            })
+            .then(async res => {
+                const json = await res.json().catch(() => null);
+                if (res.ok && json && json.status === "success") {
+                    const statusMessage = document.getElementById('status-message');
+                    statusMessage.textContent = "✅ Thank you! Your inquiry has been recorded.";
+                    statusMessage.classList.remove('hidden', 'text-red-500');
+                    statusMessage.classList.add('text-green-500');
+                    form.reset();
+                } else {
+                    throw new Error(json && json.message ? json.message : 'Server error');
+                }
+            })
+            .catch(err => {
+                console.error("Submission error:", err);
+                const statusMessage = document.getElementById('status-message');
+                statusMessage.textContent = "❌ Something went wrong. Please try again.";
+                statusMessage.classList.remove('hidden', 'text-green-500');
+                statusMessage.classList.add('text-red-500');
+            });
+        }
 
-  // keep your accordion function below
-  function toggleAccordion(id) {
-    const content = document.getElementById(id);
-    const icon = document.getElementById(id.replace('-syllabus', '-icon'));
-    const isOpen = content.classList.contains('open');
+        function toggleAccordion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(id.replace('-syllabus', '-icon'));
+            const isOpen = content.classList.contains('open');
 
-    if (isOpen) {
-      content.classList.remove('open');
-      icon.classList.remove('rotate-icon');
-    } else {
-      content.classList.add('open');
-      icon.classList.add('rotate-icon');
-    }
-  }
-</script>
-
-
+            if (isOpen) {
+                content.classList.remove('open');
+                icon.classList.remove('rotate-icon');
+            } else {
+                content.classList.add('open');
+                icon.classList.add('rotate-icon');
+            }
+        }
+    </script>
 </body>
 </html>
-
-
-
